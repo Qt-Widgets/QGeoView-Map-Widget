@@ -140,10 +140,9 @@ void Rectangle::projOnMouseDoubleClick(const QPointF& projPos)
         repaint();
     }
 
-    here
+    // here!
 
-            qInfo()
-            << "double click" << projPos;
+    qInfo() << "double click" << projPos;
 }
 
 void Rectangle::projOnObjectStartMove(const QPointF& projPos)
