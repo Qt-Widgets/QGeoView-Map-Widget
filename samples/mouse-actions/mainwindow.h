@@ -18,27 +18,34 @@
 
 #pragma once
 
-#include <QGeoView/QGVDrawItem.h>
+#include <QGroupBox>
+#include <QMainWindow>
+#include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
 
-class Ellipse : public QGVDrawItem
+#include <QGeoView/QGVLayer.h>
+#include <QGeoView/QGVMap.h>
+
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Ellipse(const QGV::GeoPos& geoPos, int radius, const QColor& color);
+    MainWindow();
+    ~MainWindow();
 
-    void setRadius(int radius);
-    void setCenter(const QGV::GeoPos& geoPos);
-    QGV::GeoPos getCenter() const;
+    QGV::GeoRect targetArea() const;
+
+    void createContextMenu();
+    void createTrackingWidget();
+    QGroupBox* createOptionsList();
+
+    void startTracking(bool start);
+    void enableAction(bool enable, QGV::MouseAction action);
 
 private:
-    void onProjection(QGVMap* geoMap) override;
-    QPainterPath projShape() const override;
-    void projPaint(QPainter* painter) override;
-
-private:
-    QGV::GeoPos mGeoCenter;
-    QPointF mProjCenter;
-    QColor mColor;
-    int mRadius;
+    QNetworkAccessManager* mManager;
+    QNetworkDiskCache* mCache;
+    QGVMap* mMap;
+    QGVLayer* mItemsLayer;
 };

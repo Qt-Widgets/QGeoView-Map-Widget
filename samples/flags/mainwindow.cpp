@@ -59,8 +59,8 @@ MainWindow::MainWindow()
         mItemsLayer->addItem(item);
     }
 
-    // Selection list
-    centralWidget()->layout()->addWidget(createSelectionList());
+    // Options list
+    centralWidget()->layout()->addWidget(createOptionsList());
 
     // Map itself
     centralWidget()->layout()->addWidget(mMap);
@@ -74,24 +74,24 @@ MainWindow::~MainWindow()
 
 QGV::GeoRect MainWindow::targetArea() const
 {
-    return QGV::GeoRect(QGV::GeoPos(51.848624, 14.325923), QGV::GeoPos(51.743758, 14.453527));
+    return QGV::GeoRect(QGV::GeoPos(51.848624, 14.7), QGV::GeoPos(51.743758, 14.9));
 }
 
-QGroupBox* MainWindow::createSelectionList()
+QGroupBox* MainWindow::createOptionsList()
 {
     const QList<QPair<QString, std::function<void(bool)>>> actions = {
         { "Item will ignore map zoom/scale", [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::IgnoreScale); } },
         { "Item will ignore map rotation/azimuth",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::IgnoreAzimuth); } },
-        { "Item is highlight-able (mouse move)",
+        { "Item is highlight-able (mouse hover)",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::Highlightable); } },
         { "Item is highlight-able with custom indication",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::HighlightCustom); } },
-        { "Item is selectable by (single LButton or Shift/Ctrl + RButton)",
+        { "Item is selectable (single LButton or Shift/Ctrl + RButton hold + move)",
           [this](bool enabled) { applySelectable(enabled); } },
         { "Item is selectable with custom indication",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::SelectCustom); } },
-        { "Item is movable (Alt + LButton hold)",
+        { "Item is movable (Alt + LButton hold + move)",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::Movable); } },
         { "Item is click-able by mouse (single LButton, double LButton)",
           [this](bool enabled) { applyFlag(enabled, QGV::ItemFlag::Clickable); } },
@@ -106,11 +106,10 @@ QGroupBox* MainWindow::createSelectionList()
         auto actionFunc = action.second;
 
         QCheckBox* checkButton = new QCheckBox(name);
-        checkButton->setChecked(false);
-
-        connect(checkButton, &QCheckBox::clicked, this, actionFunc);
-
+        connect(checkButton, &QCheckBox::toggled, this, actionFunc);
         groupBox->layout()->addWidget(checkButton);
+
+        checkButton->setChecked(true);
     }
 
     return groupBox;

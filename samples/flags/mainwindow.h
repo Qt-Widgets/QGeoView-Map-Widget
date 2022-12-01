@@ -36,7 +36,7 @@ public:
 
     QGV::GeoRect targetArea() const;
 
-    QGroupBox* createSelectionList();
+    QGroupBox* createOptionsList();
 
     void applyFlag(bool enabled, QGV::ItemFlag value);
     void applySelectable(bool enabled);

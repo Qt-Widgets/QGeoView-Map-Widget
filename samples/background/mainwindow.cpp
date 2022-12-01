@@ -35,8 +35,8 @@ MainWindow::MainWindow()
 
     mMap = new QGVMap(this);
 
-    // Selection list
-    centralWidget()->layout()->addWidget(createSelectionList());
+    // Options list
+    centralWidget()->layout()->addWidget(createOptionsList());
 
     // Map itself
     centralWidget()->layout()->addWidget(mMap);
@@ -49,7 +49,7 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {}
 
-QGroupBox* MainWindow::createSelectionList()
+QGroupBox* MainWindow::createOptionsList()
 {
     const QString customURI = "http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg";
     const QList<QPair<QString, QGVLayer*>> layers = {

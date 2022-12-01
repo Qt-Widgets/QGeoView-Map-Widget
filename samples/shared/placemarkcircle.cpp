@@ -16,13 +16,13 @@
  * along with this program; if not, see https://www.gnu.org/licenses.
  ****************************************************************************/
 
-#include "ellipse.h"
+#include "placemarkcircle.h"
 
 #include <QBrush>
 #include <QPainter>
 #include <QPen>
 
-Ellipse::Ellipse(const QGV::GeoPos& geoPos, int radius, const QColor& color)
+PlacemarkCircle::PlacemarkCircle(const QGV::GeoPos& geoPos, int radius, const QColor& color)
     : mGeoCenter(geoPos)
     , mColor(color)
     , mRadius(radius)
@@ -31,14 +31,14 @@ Ellipse::Ellipse(const QGV::GeoPos& geoPos, int radius, const QColor& color)
     setFlag(QGV::ItemFlag::IgnoreScale);
 }
 
-void Ellipse::setRadius(int radius)
+void PlacemarkCircle::setRadius(int radius)
 {
     mRadius = radius;
     resetBoundary();
     refresh();
 }
 
-void Ellipse::setCenter(const QGV::GeoPos& geoPos)
+void PlacemarkCircle::setCenter(const QGV::GeoPos& geoPos)
 {
     mGeoCenter = geoPos;
 
@@ -50,25 +50,25 @@ void Ellipse::setCenter(const QGV::GeoPos& geoPos)
     refresh();
 }
 
-QGV::GeoPos Ellipse::getCenter() const
+QGV::GeoPos PlacemarkCircle::getCenter() const
 {
     return mGeoCenter;
 }
 
-void Ellipse::onProjection(QGVMap* geoMap)
+void PlacemarkCircle::onProjection(QGVMap* geoMap)
 {
     QGVDrawItem::onProjection(geoMap);
     mProjCenter = geoMap->getProjection()->geoToProj(mGeoCenter);
 }
 
-QPainterPath Ellipse::projShape() const
+QPainterPath PlacemarkCircle::projShape() const
 {
     QPainterPath path;
     path.addEllipse(mProjCenter.x(), mProjCenter.y(), mRadius, mRadius);
     return path;
 }
 
-void Ellipse::projPaint(QPainter* painter)
+void PlacemarkCircle::projPaint(QPainter* painter)
 {
     painter->setPen(QPen(QBrush(Qt::black), 1));
     painter->setBrush(QBrush(mColor));

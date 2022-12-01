@@ -99,7 +99,7 @@ QTransform Rectangle::projTransform() const
 
 QString Rectangle::projTooltip(const QPointF& projPos) const
 {
-    // This method is optional (when empty return then no tool tip).
+    // This method is optional (when empty return then no tooltip).
     // Text for mouse tool tip.
 
     auto geo = getMap()->getProjection()->projToGeo(projPos);
@@ -115,7 +115,7 @@ void Rectangle::projOnMouseClick(const QPointF& projPos)
     // In this case we change opacity for item.
 
     if (!isSelectable()) {
-        if (opacity() <= 0.5)
+        if (getOpacity() <= 0.5)
             setOpacity(1.0);
         else
             setOpacity(0.5);
@@ -134,13 +134,11 @@ void Rectangle::projOnMouseDoubleClick(const QPointF& projPos)
 
     const QList<QColor> colors = { Qt::red, Qt::blue, Qt::green, Qt::gray, Qt::cyan, Qt::magenta, Qt::yellow };
 
-    const auto iter = std::find_if(colors.begin(), colors.end(), [](const auto& color) { return color == mColor; });
-    if (iter == colors.end()) {
-        mColor = colors[0];
-        repaint();
-    }
+    const auto iter = std::find_if(colors.begin(), colors.end(), [this](const auto& color) { return color == mColor; });
+    mColor = colors[(iter - colors.begin() + 1) % colors.size()];
+    repaint();
 
-    // here!
+    setOpacity(1.0);
 
     qInfo() << "double click" << projPos;
 }

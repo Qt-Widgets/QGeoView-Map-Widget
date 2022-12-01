@@ -42,21 +42,25 @@ MainWindow::MainWindow()
     auto osmLayer = new QGVLayerOSM();
     mMap->addItem(osmLayer);
 
-    // Selection list
-    centralWidget()->layout()->addWidget(createSelectionList());
+    // Options list
+    centralWidget()->layout()->addWidget(createOptionsList());
 
     // Map itself
     centralWidget()->layout()->addWidget(mMap);
 
     // Show whole world
-    auto target = QGV::GeoRect(-10, -10, 10, 10);
-    mMap->cameraTo(QGVCameraActions(mMap).scaleTo(target));
+    mMap->cameraTo(QGVCameraActions(mMap).scaleTo(targetArea()));
 }
 
 MainWindow::~MainWindow()
 {}
 
-QGroupBox* MainWindow::createSelectionList()
+QGV::GeoRect MainWindow::targetArea() const
+{
+    return QGV::GeoRect(QGV::GeoPos(51.848624, 14.7), QGV::GeoPos(51.743758, 14.9));
+}
+
+QGroupBox* MainWindow::createOptionsList()
 {
     QList<QPair<QString, QGVWidget*>> widgets = {
         { "Compass", new QGVWidgetCompass() },

@@ -18,25 +18,27 @@
 
 #pragma once
 
-#include <QGroupBox>
-#include <QMainWindow>
-#include <QNetworkAccessManager>
-#include <QNetworkDiskCache>
+#include <QGeoView/QGVDrawItem.h>
 
-#include <QGeoView/QGVMap.h>
-
-class MainWindow : public QMainWindow
+class PlacemarkCircle : public QGVDrawItem
 {
     Q_OBJECT
 
 public:
-    MainWindow();
-    ~MainWindow();
+    explicit PlacemarkCircle(const QGV::GeoPos& geoPos, int radius, const QColor& color);
 
-    QGroupBox* createOptionsList();
+    void setRadius(int radius);
+    void setCenter(const QGV::GeoPos& geoPos);
+    QGV::GeoPos getCenter() const;
 
 private:
-    QNetworkAccessManager* mManager;
-    QNetworkDiskCache* mCache;
-    QGVMap* mMap;
+    void onProjection(QGVMap* geoMap) override;
+    QPainterPath projShape() const override;
+    void projPaint(QPainter* painter) override;
+
+private:
+    QGV::GeoPos mGeoCenter;
+    QPointF mProjCenter;
+    QColor mColor;
+    int mRadius;
 };

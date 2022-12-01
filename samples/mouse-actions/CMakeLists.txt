@@ -20,22 +20,18 @@ find_package(Qt${QT_VERSION} REQUIRED COMPONENTS
     Network
 )
 
-add_library(qgeoview-samples-shared
-    helpers.cpp
-    helpers.h
-    placemarkcircle.cpp
-    placemarkcircle.h
-    rectangle.cpp
-    rectangle.h
+add_executable(qgeoview-samples-mouse-actions
+    main.cpp
+    mainwindow.h
+    mainwindow.cpp
 )
 
-target_include_directories(qgeoview-samples-shared PUBLIC .)
-
-target_link_libraries(qgeoview-samples-shared
+target_link_libraries(qgeoview-samples-mouse-actions
     PRIVATE
     Qt${QT_VERSION}::Core
     Qt${QT_VERSION}::Network
     Qt${QT_VERSION}::Gui
     Qt${QT_VERSION}::Widgets
     QGeoView
+    qgeoview-samples-shared
 )

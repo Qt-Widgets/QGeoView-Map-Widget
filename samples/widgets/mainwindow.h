@@ -33,7 +33,9 @@ public:
     MainWindow();
     ~MainWindow();
 
-    QGroupBox* createSelectionList();
+    QGV::GeoRect targetArea() const;
+
+    QGroupBox* createOptionsList();
 
 private:
     QNetworkAccessManager* mManager;

@@ -19,7 +19,7 @@
 #include "mainwindow.h"
 
 #include <QGeoView/QGVLayerOSM.h>
-#include <ellipse.h>
+#include <placemarkcircle.h>
 
 #include <QRandomGenerator>
 #include <QTimer>
@@ -42,7 +42,7 @@ MainWindow::MainWindow()
     mMap->addItem(customLayer);
 
     // Add moving item in custom layer
-    auto item = new Ellipse(QGV::GeoPos(10, 20), 30, Qt::red);
+    auto item = new PlacemarkCircle(QGV::GeoPos(10, 20), 30, Qt::red);
     customLayer->addItem(item);
 
     // Moving timer

@@ -1,11 +1,11 @@
 SOURCES += \
     $$PWD/helpers.cpp \
-    $$PWD/ellipse.cpp \
+    $$PWD/placemarkcircle.cpp \
     $$PWD/rectangle.cpp
 
 HEADERS += \
     $$PWD/helpers.h \
-    $$PWD/ellipse.h \
+    $$PWD/placemarkcircle.h \
     $$PWD/rectangle.h
 
 INCLUDEPATH += \

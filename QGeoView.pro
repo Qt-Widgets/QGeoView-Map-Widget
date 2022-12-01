@@ -6,4 +6,5 @@ SUBDIRS = \
     samples/background \
     samples/widgets \
     samples/flags \
-    samples/moving-objects
+    samples/moving-objects \
+    samples/mouse-actions

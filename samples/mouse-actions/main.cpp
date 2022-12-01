@@ -16,27 +16,22 @@
  * along with this program; if not, see https://www.gnu.org/licenses.
  ****************************************************************************/
 
-#pragma once
+#include <QApplication>
+#include <QCommandLineParser>
 
-#include <QGroupBox>
-#include <QMainWindow>
-#include <QNetworkAccessManager>
-#include <QNetworkDiskCache>
+#include "mainwindow.h"
 
-#include <QGeoView/QGVMap.h>
-
-class MainWindow : public QMainWindow
+int main(int argc, char* argv[])
 {
-    Q_OBJECT
+    QApplication app(argc, argv);
+    app.setApplicationName("QGeoView Samples");
 
-public:
-    MainWindow();
-    ~MainWindow();
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.process(app);
 
-    QGroupBox* createOptionsList();
-
-private:
-    QNetworkAccessManager* mManager;
-    QNetworkDiskCache* mCache;
-    QGVMap* mMap;
-};
+    MainWindow window;
+    window.show();
+    return app.exec();
+}
